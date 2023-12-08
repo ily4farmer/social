@@ -1,5 +1,6 @@
 import { BaseQueryFn } from '@reduxjs/toolkit/dist/query';
 import type { AxiosError, AxiosRequestConfig } from 'axios';
+import cookie from 'js-cookie';
 import { api } from 'services/axiosConfig';
 
 import { ApiError, BaseQueryError } from '~types';
@@ -8,8 +9,15 @@ export const axiosBaseQuery: BaseQueryFn<AxiosRequestConfig, unknown, BaseQueryE
   requestConfig,
 ) => {
   try {
+    const token = cookie.get('token');
+
     const result = await api({
       ...requestConfig,
+      headers: token
+        ? {
+            Authorization: `Bearer ${token}`,
+          }
+        : {},
     });
     return { data: result.data };
   } catch (axiosError) {

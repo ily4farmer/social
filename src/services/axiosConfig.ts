@@ -41,6 +41,6 @@ const commonApiConfig: CreateAxiosDefaults = {
 
 export const api = axios.create({
   ...commonApiConfig,
-  baseURL: 'https://jsonplaceholder.typicode.com',
+  baseURL: 'http://localhost:5700/api',
   withCredentials: true,
 });
