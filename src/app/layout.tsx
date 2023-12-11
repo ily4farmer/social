@@ -3,8 +3,7 @@ import './globals.scss';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import { ChakraProvider, StoreProvider } from '~lib';
-import { Layout } from '~ui';
+import { Chakra, StoreProvider } from '~lib';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,11 +15,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head />
       <body className={inter.className}>
         <StoreProvider>
-          <ChakraProvider>
-            <Layout>{children}</Layout>
-          </ChakraProvider>
+          <Chakra>{children}</Chakra>
         </StoreProvider>
       </body>
     </html>

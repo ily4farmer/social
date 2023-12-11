@@ -1,6 +1,7 @@
 'use client';
 
-import { Button, Flex, useToast } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/next-js';
+import { Button, Flex, SimpleGrid, useToast } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -46,16 +47,22 @@ export const LoginForm = () => {
   };
 
   return (
-    <Flex maxW="800px" margin="auto">
+    <Flex maxW="400px" width="100%" margin="auto" flexDirection="column">
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Email />
-          <Password />
-          <Button mt="15px" type="submit" isLoading={isLoading}>
-            Отправить
-          </Button>
+        <form onSubmit={methods.handleSubmit(onSubmit)} style={{ width: '100%' }}>
+          <SimpleGrid columns={1} spacing="2px">
+            <Email />
+            <Password />
+            <Button mt="15px" type="submit" variant="primary" isLoading={isLoading}>
+              Отправить
+            </Button>
+          </SimpleGrid>
         </form>
       </FormProvider>
+
+      <Link href="/register" mt={25} textAlign="center" textDecoration="underline">
+        Регистрация
+      </Link>
     </Flex>
   );
 };

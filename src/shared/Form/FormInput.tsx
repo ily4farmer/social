@@ -1,4 +1,5 @@
 import {
+  Box,
   FormControl,
   FormControlProps,
   FormErrorMessage,
@@ -20,6 +21,8 @@ export const FormInput = ({ control, errorMessage, input, label }: FormInputProp
   <FormControl {...control}>
     <FormLabel {...label} />
     <Input {...input} />
-    <FormErrorMessage height="17px" display="block" {...errorMessage} />
+    <Box minH={17} mt="5px">
+      <FormErrorMessage mt={0} {...errorMessage} />
+    </Box>
   </FormControl>
 );

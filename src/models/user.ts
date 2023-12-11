@@ -12,7 +12,7 @@ export type TUserCreateResopnse = {
   email: string;
   firstName: string;
   lastName: string;
-  middleName: string;
+  middleName?: string;
   password: string;
   telegram: string;
 };
