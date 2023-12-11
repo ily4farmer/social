@@ -14,6 +14,12 @@ export const userApi = createApi({
         url: `/user/create-user`,
       }),
     }),
+    getMe: builder.query<unknown, unknown>({
+      query: () => ({
+        method: 'GET',
+        url: `/user/me`,
+      }),
+    }),
   }),
   reducerPath: 'userApi',
 });

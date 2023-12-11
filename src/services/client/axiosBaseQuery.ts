@@ -24,7 +24,9 @@ export const axiosBaseQuery: BaseQueryFn<AxiosRequestConfig, unknown, BaseQueryE
     const err = axiosError as AxiosError<ApiError>;
     return {
       error: {
-        message: err.response?.data.errors.map(({ message }) => message).join(';') || err.message,
+        message: err.response?.data.errors
+          ? err.response?.data.errors.map(({ message }) => message).join(';')
+          : err.message,
         status: err.response?.status,
       },
     };
