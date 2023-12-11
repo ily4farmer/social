@@ -1,6 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-import { TAuthLoginRequest, TAuthLoginResponse } from '~models';
+import {
+  TAuthLoginRequest,
+  TAuthLoginResponse,
+  TAuthValidateEmailRequest,
+  TAuthValidateEmailResponse,
+} from '~models';
 
 import { axiosBaseQuery } from './axiosBaseQuery';
 
@@ -12,6 +17,13 @@ export const authApi = createApi({
         data,
         method: 'POST',
         url: `/auth/login`,
+      }),
+    }),
+    validateEmail: builder.query<TAuthValidateEmailRequest, TAuthValidateEmailResponse>({
+      query: (data) => ({
+        data,
+        method: 'POST',
+        url: `/auth/validate-email`,
       }),
     }),
   }),
