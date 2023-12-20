@@ -1,5 +1,6 @@
 export type TAuthLoginResponse = {
   token: string;
+  userId: string;
 };
 
 export type TAuthLoginRequest = {

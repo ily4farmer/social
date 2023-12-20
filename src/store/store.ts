@@ -4,12 +4,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector, useStore } from 'react-
 import { authApi, listApi, userApi } from '~services/client';
 
 import { listSlice } from './slices/list';
+import { userSlice } from './slices/user';
 
 export const reducers = combineReducers({
   [listSlice.name]: listSlice.reducer,
   [listApi.reducerPath]: listApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
+  [userSlice.name]: userSlice.reducer,
 });
 
 export const makeStore = () =>

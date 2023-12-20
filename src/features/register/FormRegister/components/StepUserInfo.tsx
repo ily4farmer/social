@@ -4,7 +4,7 @@ import { ChangeEvent, SetStateAction } from 'react';
 import { Controller, SubmitHandler, useFormContext } from 'react-hook-form';
 
 import { userApi } from '~services/client';
-import { FormInput, FormRadioGroup } from '~shared';
+import { FormDatePicker, FormInput, FormRadioGroup } from '~shared';
 import { ApiError, TRegisterShema } from '~types';
 
 import { EStepFormVariants } from '../types';
@@ -70,7 +70,7 @@ export const StepUserInfo = ({ setStep }: StepEmailPasswordProps) => {
           render={({ field: { ref, ...field } }) => (
             <FormInput
               {...field}
-              control={{ isInvalid: Boolean(errors.firstName) }}
+              control={{ isInvalid: Boolean(errors.firstName), isRequired: true }}
               label={{ children: 'Имя' }}
               input={{
                 onChange: field.onChange,
@@ -92,13 +92,12 @@ export const StepUserInfo = ({ setStep }: StepEmailPasswordProps) => {
           render={({ field: { ref, ...field } }) => (
             <FormInput
               {...field}
-              control={{ isInvalid: Boolean(errors.lastName) }}
+              control={{ isInvalid: Boolean(errors.lastName), isRequired: true }}
               label={{ children: 'Фамилия' }}
               input={{
                 onChange: field.onChange,
                 onFocus: () => clearErrors('lastName'),
                 placeholder: 'Введите фамилию',
-                type: 'password',
                 value: field.value,
               }}
               errorMessage={{
@@ -120,7 +119,6 @@ export const StepUserInfo = ({ setStep }: StepEmailPasswordProps) => {
                 onChange: field.onChange,
                 onFocus: () => clearErrors('middleName'),
                 placeholder: 'Введите отчество',
-                type: 'password',
                 value: field.value,
               }}
               errorMessage={{
@@ -158,7 +156,7 @@ export const StepUserInfo = ({ setStep }: StepEmailPasswordProps) => {
           render={({ field: { ref, ...field } }) => (
             <FormInput
               {...field}
-              control={{ isInvalid: Boolean(errors.phoneNumber) }}
+              control={{ isInvalid: Boolean(errors.phoneNumber), isRequired: true }}
               label={{ children: 'Телефон' }}
               input={{
                 onChange: field.onChange,
@@ -180,7 +178,7 @@ export const StepUserInfo = ({ setStep }: StepEmailPasswordProps) => {
           render={({ field: { ref, ...field } }) => (
             <FormInput
               {...field}
-              control={{ isInvalid: Boolean(errors.telegram) }}
+              control={{ isInvalid: Boolean(errors.telegram), isRequired: true }}
               label={{ children: 'Telegram' }}
               input={{
                 onChange: telegramHandler,
@@ -191,6 +189,27 @@ export const StepUserInfo = ({ setStep }: StepEmailPasswordProps) => {
               }}
               errorMessage={{
                 children: errors.telegram && errors.telegram.message,
+              }}
+            />
+          )}
+        />
+
+        <Controller
+          name="dateBirthday"
+          control={control}
+          render={({ field: { ref, ...field } }) => (
+            <FormDatePicker
+              {...field}
+              control={{ isInvalid: Boolean(errors.dateBirthday), isRequired: true }}
+              label={{ children: 'День рождения' }}
+              datePicker={{
+                dateFormat: 'dd.MM.yyyy',
+                onChange: field.onChange,
+                placeholderText: 'Введите дату',
+                selected: field.value,
+              }}
+              errorMessage={{
+                children: errors.dateBirthday && errors.dateBirthday.message,
               }}
             />
           )}

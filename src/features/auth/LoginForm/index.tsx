@@ -25,10 +25,10 @@ export const LoginForm = () => {
 
   const onSubmit: SubmitHandler<TAuthLoginShema> = async (data) => {
     try {
-      await login(data).unwrap();
+      const res = await login(data).unwrap();
 
       setTimeout(() => {
-        router.push('/profile');
+        router.push(`/users/${res.userId}`);
       }, 10000);
 
       methods.reset();
