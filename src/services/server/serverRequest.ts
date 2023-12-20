@@ -19,9 +19,8 @@ export const serverRequest =
     const args = requestFunction(params);
     return api({
       ...args,
-      baseURL: `${process.env.API_URL}`,
       headers: {
-        Authorization: `Bearer ${cookies().get('token')}`,
+        Authorization: `Bearer ${cookies().get('token')?.value}`,
         cookie: getCookies(),
       },
     }).then((res) => res as AxiosResponse<T>);

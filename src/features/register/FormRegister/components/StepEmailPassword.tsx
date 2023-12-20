@@ -39,8 +39,6 @@ export const StepEmailPassword = ({ setStep }: StepEmailPasswordProps) => {
     } catch (error) {
       const err = error as ApiError;
 
-      console.log(err);
-
       toast({
         description: err.message,
         duration: 9000,
@@ -63,7 +61,7 @@ export const StepEmailPassword = ({ setStep }: StepEmailPasswordProps) => {
           render={({ field: { ref, ...field } }) => (
             <FormInput
               {...field}
-              control={{ isInvalid: Boolean(errors.email) }}
+              control={{ isInvalid: Boolean(errors.email), isRequired: true }}
               label={{ children: 'Email' }}
               input={{
                 onChange: field.onChange,
@@ -85,7 +83,7 @@ export const StepEmailPassword = ({ setStep }: StepEmailPasswordProps) => {
           render={({ field: { ref, ...field } }) => (
             <FormInput
               {...field}
-              control={{ isInvalid: Boolean(errors.password) }}
+              control={{ isInvalid: Boolean(errors.password), isRequired: true }}
               label={{ children: 'Пароль' }}
               input={{
                 onChange: field.onChange,
@@ -107,7 +105,7 @@ export const StepEmailPassword = ({ setStep }: StepEmailPasswordProps) => {
           render={({ field: { ref, ...field } }) => (
             <FormInput
               {...field}
-              control={{ isInvalid: Boolean(errors.confirmPassword) }}
+              control={{ isInvalid: Boolean(errors.confirmPassword), isRequired: true }}
               label={{ children: 'Повторите пароль' }}
               input={{
                 onChange: field.onChange,

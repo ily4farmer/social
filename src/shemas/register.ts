@@ -11,6 +11,7 @@ export enum ERegisterGenderVariants {
 export const registerSchema = z
   .object({
     confirmPassword: passwordSchema,
+    dateBirthday: z.date(),
     email: emailSchema,
     firstName: z.string(),
     gender: z.nativeEnum(ERegisterGenderVariants),
