@@ -20,6 +20,17 @@ export const userApi = createApi({
         url: `/user/me`,
       }),
     }),
+    uploadAvatar: builder.mutation<unknown, { file: FormData; userId: number }>({
+      query: ({ file, userId }) => ({
+        body: file,
+        formData: true,
+        headers: {
+          'Content-Type': 'multipart/form-data;',
+        },
+        method: 'PATCH',
+        url: `/user/upload-avatar/${userId}`,
+      }),
+    }),
   }),
   reducerPath: 'userApi',
 });

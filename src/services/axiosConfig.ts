@@ -32,9 +32,6 @@ export const commonRequestTransformers: AxiosRequestTransformer[] = [
 export const commonResponseTransformers: AxiosResponseTransformer[] = [responseToCamelCase];
 
 const commonApiConfig: CreateAxiosDefaults = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
   transformRequest: commonRequestTransformers,
   transformResponse: commonResponseTransformers,
 };

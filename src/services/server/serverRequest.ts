@@ -21,6 +21,7 @@ export const serverRequest =
       ...args,
       headers: {
         Authorization: `Bearer ${cookies().get('token')?.value}`,
+        'Content-Type': 'application/json',
         cookie: getCookies(),
       },
     }).then((res) => res as AxiosResponse<T>);
