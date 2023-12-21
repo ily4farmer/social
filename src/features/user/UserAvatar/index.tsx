@@ -1,24 +1,20 @@
 'use client';
 
-import {
-  Avatar,
-  Button,
-  Flex,
-  Input,
-  Text,
-  useBoolean,
-  useDisclosure,
-  Wrap,
-} from '@chakra-ui/react';
+import { Avatar, Button, Flex, Text, useBoolean, useDisclosure, Wrap } from '@chakra-ui/react';
+import { useParams } from 'next/navigation';
 
 import { useAppSelector } from '~store';
-import { Modal } from '~ui';
+import { DropZone, Modal } from '~ui';
 
 export const UserAvatar = () => {
+  const param = useParams();
+
   const avatar = useAppSelector((state) => state.user.user?.avatar);
 
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [flag, setFlag] = useBoolean();
+
+  const handleChange = () => onClose();
 
   return (
     <Wrap>
@@ -56,14 +52,22 @@ export const UserAvatar = () => {
       <Modal
         isOpen={isOpen}
         onClose={onClose}
+        modalContent={{
+          w: '360px',
+        }}
         footer={[
           <Button colorScheme="blue" mr={3} onClick={onClose}>
             Close
           </Button>,
-          <Button variant="secondary">Secondary Action</Button>,
         ]}
       >
-        <Input type="file" />
+        <Flex w="100%" h="100%" justifyContent="center" alignItems="center">
+          <DropZone
+            method="PATCH"
+            url={`/user/upload-avatar/${param.id}`}
+            onChange={handleChange}
+          />
+        </Flex>
       </Modal>
     </Wrap>
   );

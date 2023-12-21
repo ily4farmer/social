@@ -5,19 +5,26 @@ import { api } from 'services/axiosConfig';
 
 import { ApiError, BaseQueryError } from '~types';
 
-export const axiosBaseQuery: BaseQueryFn<AxiosRequestConfig, unknown, BaseQueryError> = async (
-  requestConfig,
-) => {
+export const axiosBaseQuery: BaseQueryFn<AxiosRequestConfig, unknown, BaseQueryError> = async ({
+  headers,
+  ...requestConfig
+}) => {
   try {
     const token = cookie.get('token');
 
+    const headerConfig = token
+      ? {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          ...headers,
+        }
+      : {
+          ...headers,
+        };
+
     const result = await api({
       ...requestConfig,
-      headers: token
-        ? {
-            Authorization: `Bearer ${token}`,
-          }
-        : {},
+      headers: headerConfig,
     });
     return { data: result.data };
   } catch (axiosError) {

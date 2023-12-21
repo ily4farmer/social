@@ -7,7 +7,7 @@ export function middleware(req: NextRequest) {
 
   if (publicRoutes.includes(req.nextUrl.pathname)) {
     if (token) {
-      return NextResponse.redirect(new URL('/profile', req.url));
+      return NextResponse.redirect(new URL(`/users/1`, req.url));
     }
 
     return NextResponse.next();
