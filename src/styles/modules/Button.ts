@@ -6,6 +6,7 @@ export const Button = defineStyleConfig({
     borderRadius: 8,
     borderStyle: 'solid',
     borderWidth: '1px',
+    color: '#fafafa',
     fontWeight: 700,
   },
   defaultProps: {

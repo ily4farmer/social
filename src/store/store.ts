@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector, useStore } from 'react-redux';
 
-import { authApi, listApi, userApi } from '~services/client';
+import { authApi, listApi, photoApi, userApi } from '~services/client';
 
 import { listSlice } from './slices/list';
 import { userSlice } from './slices/user';
@@ -12,6 +12,7 @@ export const reducers = combineReducers({
   [userApi.reducerPath]: userApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
   [userSlice.name]: userSlice.reducer,
+  [photoApi.reducerPath]: photoApi.reducer,
 });
 
 export const makeStore = () =>
@@ -22,6 +23,7 @@ export const makeStore = () =>
         listApi.middleware,
         userApi.middleware,
         authApi.middleware,
+        photoApi.middleware,
       ),
     reducer: reducers,
   });

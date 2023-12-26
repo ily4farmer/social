@@ -15,7 +15,6 @@ export const axiosBaseQuery: BaseQueryFn<AxiosRequestConfig, unknown, BaseQueryE
     const headerConfig = token
       ? {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
           ...headers,
         }
       : {

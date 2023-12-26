@@ -15,13 +15,14 @@ type Props = ModalProps & {
   children: ReactNode;
   footer: ReactNode[];
   modalContent?: ModalContentProps;
+  textTitle: string;
 };
 
-export const Modal = ({ children, footer, modalContent, ...props }: Props) => (
+export const Modal = ({ children, footer, modalContent, textTitle, ...props }: Props) => (
   <ChakraModal {...props}>
     <ModalOverlay />
     <ModalContent {...modalContent}>
-      <ModalHeader>Сменить аватар</ModalHeader>
+      <ModalHeader>{textTitle}</ModalHeader>
       <ModalCloseButton />
       <ModalBody>{children}</ModalBody>
 

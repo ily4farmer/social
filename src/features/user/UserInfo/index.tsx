@@ -2,29 +2,25 @@
 
 import { Card, CardBody, CardHeader, Flex, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 import { isEqual } from 'lodash';
+import { useParams } from 'next/navigation';
 
+import { userSelector } from '~selectors';
 import { useAppSelector } from '~store';
 import { formatDateBirthday, formatGender } from '~utils';
 
 export const UserInfo = () => {
-  const { dateBirthday, email, fullName, gender, lastName, name, phone, telegram } = useAppSelector(
-    ({ user }) => ({
-      dateBirthday: user.user?.dateBirthday,
-      email: user.user?.email,
-      fullName: user.user?.fullName,
-      gender: user.user?.gender,
-      lastName: user.user?.lastName,
-      name: user.user?.firstName,
-      phone: user.user?.phoneNumber,
-      telegram: user.user?.telegram,
-    }),
-    isEqual,
-  );
+  const param = useParams();
+
+  const user = useAppSelector(userSelector(Number(param.id)), isEqual);
+
+  const { dateBirthday, email, firstName, fullName, gender, lastName, phoneNumber, telegram } =
+    user ?? {};
+
   return (
     <Card w="100%" height="fit-content">
       <CardHeader>
         <Heading as="h1">
-          {name} {lastName}
+          {firstName} {lastName}
         </Heading>
       </CardHeader>
       <CardBody>
@@ -47,7 +43,7 @@ export const UserInfo = () => {
             <Heading as="h3" variant="secondary">
               Телефон
             </Heading>
-            <Text>{phone}</Text>
+            <Text>{phoneNumber}</Text>
           </Flex>
 
           <Flex flexDirection="column" alignItems="flex-start">
