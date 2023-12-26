@@ -1,33 +1,14 @@
 import { Link } from '@chakra-ui/next-js';
-import { Flex, Image, Text } from '@chakra-ui/react';
+import { Flex, Image } from '@chakra-ui/react';
 import { useParams } from 'next/navigation';
 
-type PhotoProps = {
+type PhotoItemProps = {
   id: number;
   image: string;
-  index: number;
-  lenght: number;
-  onOpen: () => void;
 };
 
-export const PhotoItem = ({ id, image, index, lenght, onOpen }: PhotoProps) => {
+export const PhotoItem = ({ id, image }: PhotoItemProps) => {
   const param = useParams();
-
-  if (index === 4) {
-    return (
-      <Flex
-        h={180}
-        alignItems="center"
-        justifyContent="center"
-        border="1px solid #1C2D50"
-        borderRadius="8px"
-        cursor="pointer"
-        onClick={onOpen}
-      >
-        <Text>Посмотреть все</Text>
-      </Flex>
-    );
-  }
 
   return (
     <Link href={`/users/${param.id}/photo/${id}`}>
