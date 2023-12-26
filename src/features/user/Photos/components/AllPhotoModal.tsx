@@ -1,7 +1,9 @@
 'use client';
 
-import { Button, Image, SimpleGrid } from '@chakra-ui/react';
+import { Button, SimpleGrid } from '@chakra-ui/react';
 import { skipToken } from '@reduxjs/toolkit/query';
+import Loading from 'app/(protectedRoutes)/loading';
+import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { shallowEqual } from 'react-redux';
@@ -14,6 +16,10 @@ type AllPhotoModalProps = {
   isOpen: boolean;
   onClose: () => void;
 };
+
+const DynamicPhotoItem = dynamic(() => import('./PhotoItem').then((m) => m.PhotoItem), {
+  loading: () => <Loading />,
+});
 
 export const AllPhotoModal = ({ isOpen, onClose }: AllPhotoModalProps) => {
   const param = useParams();
@@ -54,7 +60,7 @@ export const AllPhotoModal = ({ isOpen, onClose }: AllPhotoModalProps) => {
     >
       <SimpleGrid columns={5} spacing={3}>
         {photos.map((el) => (
-          <Image h={200} w={200} key={el.id} src={el.image} />
+          <DynamicPhotoItem key={el.id} {...el} />
         ))}
       </SimpleGrid>
     </Modal>

@@ -1,24 +1,10 @@
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Flex,
-  Heading,
-  SimpleGrid,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
-import Loading from 'app/(protectedRoutes)/loading';
-import dynamic from 'next/dynamic';
+import { Card, CardBody, CardHeader, Flex, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import { useParams } from 'next/navigation';
 
+import { TGetAllPhotosByUserRequest } from '~models';
 import { photoApi } from '~services/client';
 
-import { AddPhoto, AddPhotoModal, AllPhotoModal } from './components';
-
-const DynamicPhotoItem = dynamic(() => import('./components/PhotoItem').then((m) => m.PhotoItem), {
-  loading: () => <Loading />,
-});
+import { AddPhoto, AddPhotoModal, AllPhotoModal, PhotoList } from './components';
 
 export const Photos = () => {
   const param = useParams();
@@ -39,17 +25,7 @@ export const Photos = () => {
       </CardHeader>
       <CardBody>
         {data?.data.length !== 0 ? (
-          <SimpleGrid columns={5} spacing={3}>
-            {data?.data.map((el, index) => (
-              <DynamicPhotoItem
-                lenght={data.data.length}
-                onOpen={onOpen}
-                index={index}
-                key={el.id}
-                {...el}
-              />
-            ))}
-          </SimpleGrid>
+          <PhotoList data={data as TGetAllPhotosByUserRequest} onOpen={onOpen} />
         ) : (
           <Flex flexDirection="column" alignItems="center">
             <Text>У вас нет картинок</Text>
