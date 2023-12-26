@@ -50,6 +50,7 @@ export const UserAvatar = () => {
       </Flex>
 
       <Modal
+        textTitle="Изменить fdsатар"
         isOpen={isOpen}
         onClose={onClose}
         modalContent={{

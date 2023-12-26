@@ -1,5 +1,8 @@
 export const styles = {
   global: () => ({
+    '*': {
+      color: '#fafafa',
+    },
     body: {
       bgColor: '#0B1529',
     },
