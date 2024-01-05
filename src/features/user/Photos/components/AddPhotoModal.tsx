@@ -1,3 +1,5 @@
+'use client';
+
 import { AddIcon } from '@chakra-ui/icons';
 import { Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import { useParams } from 'next/navigation';

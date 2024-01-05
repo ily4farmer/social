@@ -1,37 +1,16 @@
-import { Flex, SimpleGrid, Text } from '@chakra-ui/react';
-import Loading from 'app/(protectedRoutes)/loading';
-import dynamic from 'next/dynamic';
+'use client';
+
+import { SimpleGrid } from '@chakra-ui/react';
 
 import { TGetAllPhotosByUserRequest } from '~models';
 
-const DynamicPhotoItem = dynamic(() => import('./PhotoItem').then((m) => m.PhotoItem), {
-  loading: () => <Loading />,
-});
+import { AllPhotoModal } from './AllPhotoModal';
+import { PhotoItem } from './PhotoItem';
 
-export const PhotoList = ({
-  data,
-  onOpen,
-}: {
-  data: TGetAllPhotosByUserRequest;
-  onOpen: () => void;
-}) => (
+export const PhotoList = ({ data }: { data: TGetAllPhotosByUserRequest['data'] }) => (
   <SimpleGrid columns={5} spacing={3}>
-    {data?.data.map((el, index) =>
-      index !== 4 ? (
-        <DynamicPhotoItem key={el.id} {...el} />
-      ) : (
-        <Flex
-          h={180}
-          alignItems="center"
-          justifyContent="center"
-          border="1px solid #1C2D50"
-          borderRadius="8px"
-          cursor="pointer"
-          onClick={onOpen}
-        >
-          <Text>Посмотреть все</Text>
-        </Flex>
-      ),
+    {data.map((el, index) =>
+      index !== 4 ? <PhotoItem key={el.id} {...el} /> : <AllPhotoModal defaultPhotos={data} />,
     )}
   </SimpleGrid>
 );
