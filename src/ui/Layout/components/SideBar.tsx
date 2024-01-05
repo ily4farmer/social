@@ -1,3 +1,5 @@
+'use client';
+
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { Link } from '@chakra-ui/next-js';
 import {
@@ -25,9 +27,13 @@ export const Sidebar = () => {
         <DrawerOverlay />
         <DrawerContent bgColor="#111F39">
           <DrawerCloseButton />
-          <DrawerHeader color="#fafafa">Дашборд</DrawerHeader>
+          <DrawerHeader color="#fafafa">Меню</DrawerHeader>
 
-          <DrawerBody>
+          <DrawerBody display="flex" flexDirection="column">
+            <Link href="/friends" textDecor="underline">
+              Мой профиль
+            </Link>
+
             <Link href="/friends" textDecor="underline">
               Друзья
             </Link>

@@ -3,13 +3,11 @@
 import { Avatar, Button, Flex, Text, useBoolean, useDisclosure, Wrap } from '@chakra-ui/react';
 import { useParams } from 'next/navigation';
 
-import { useAppSelector } from '~store';
+import { TUserModel } from '~models';
 import { DropZone, Modal } from '~ui';
 
-export const UserAvatar = () => {
+export const UserAvatar = ({ avatar }: { avatar: TUserModel['avatar'] }) => {
   const param = useParams();
-
-  const avatar = useAppSelector((state) => state.user.user?.avatar);
 
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [flag, setFlag] = useBoolean();
@@ -39,8 +37,7 @@ export const UserAvatar = () => {
             backgroundColor: '#333',
             opacity: '0.3',
           }}
-          name="Dan Abrahmov"
-          src={`http://localhost:5700/${avatar}`}
+          src={avatar as string}
           onClick={onOpen}
           borderRadius={8}
         />
@@ -50,7 +47,7 @@ export const UserAvatar = () => {
       </Flex>
 
       <Modal
-        textTitle="Изменить fdsатар"
+        textTitle="Изменить аватар"
         isOpen={isOpen}
         onClose={onClose}
         modalContent={{

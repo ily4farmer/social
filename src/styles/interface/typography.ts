@@ -22,6 +22,9 @@ export const Text = defineStyleConfig({
     base: {
       fontSize: '14px',
     },
+    xl: {
+      fontSize: '20px',
+    },
   },
   variants: {
     base: {

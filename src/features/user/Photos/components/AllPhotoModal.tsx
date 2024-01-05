@@ -1,68 +1,89 @@
 'use client';
 
-import { Button, SimpleGrid } from '@chakra-ui/react';
-import { skipToken } from '@reduxjs/toolkit/query';
+import { Button, Flex, SimpleGrid, Text, useDisclosure } from '@chakra-ui/react';
 import Loading from 'app/(protectedRoutes)/loading';
 import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
-import { shallowEqual } from 'react-redux';
+import { useEffect, useState } from 'react';
 
+import { TGetAllPhotosByUserRequest } from '~models';
 import { photoApi } from '~services/client';
-import { useAppSelector } from '~store';
 import { Modal } from '~ui';
-
-type AllPhotoModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-};
 
 const DynamicPhotoItem = dynamic(() => import('./PhotoItem').then((m) => m.PhotoItem), {
   loading: () => <Loading />,
 });
 
-export const AllPhotoModal = ({ isOpen, onClose }: AllPhotoModalProps) => {
+export const AllPhotoModal = ({
+  defaultPhotos,
+}: {
+  defaultPhotos: TGetAllPhotosByUserRequest['data'];
+}) => {
   const param = useParams();
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const [listPhotos, setListPhotos] = useState<TGetAllPhotosByUserRequest['data']>([
+    ...defaultPhotos,
+  ]);
 
   const [page, setPage] = useState<number>(2);
 
-  const photos = useAppSelector((state) => state.user.photos, shallowEqual);
+  const { data, isFetching } = photoApi.useGetAllPhotosByUserQuery({
+    page,
+    size: 5,
+    userId: Number(param.id),
+  });
 
-  const { isFetching } = photoApi.useGetAllPhotosByUserQuery(
-    isOpen
-      ? {
-          page,
-          size: 5,
-          userId: Number(param.id),
-        }
-      : skipToken,
-  );
+  useEffect(() => {
+    if (data?.data && data?.data.length !== 0) {
+      setListPhotos((prev) => prev.concat(data?.data));
+    }
+  }, [data?.data]);
 
-  const handlePage = () => setPage((prev) => prev + 5);
+  const handlePage = () => setPage((prev) => prev + 1);
 
   return (
-    <Modal
-      textTitle="Все фотографии"
-      isOpen={isOpen}
-      onClose={onClose}
-      modalContent={{
-        maxW: '1200px',
-        w: '100%',
-      }}
-      footer={[
-        <Button colorScheme="blue" mr={3} onClick={onClose}>
-          Загрыть
-        </Button>,
-        <Button isLoading={isFetching} colorScheme="blue" mr={3} onClick={handlePage}>
-          Показать еще
-        </Button>,
-      ]}
-    >
-      <SimpleGrid columns={5} spacing={3}>
-        {photos.map((el) => (
-          <DynamicPhotoItem key={el.id} {...el} />
-        ))}
-      </SimpleGrid>
-    </Modal>
+    <>
+      <Flex
+        h={180}
+        alignItems="center"
+        justifyContent="center"
+        border="1px solid #1C2D50"
+        borderRadius="8px"
+        cursor="pointer"
+        onClick={onOpen}
+      >
+        <Text>Посмотреть все</Text>
+      </Flex>
+      <Modal
+        textTitle="Все фотографии"
+        isOpen={isOpen}
+        onClose={onClose}
+        modalContent={{
+          maxW: '1200px',
+          w: '100%',
+        }}
+        footer={[
+          <Button colorScheme="blue" mr={3} onClick={onClose}>
+            Загрыть
+          </Button>,
+          <Button
+            isLoading={isFetching}
+            display={data?.totalPages === page ? 'none' : 'block'}
+            colorScheme="blue"
+            mr={3}
+            onClick={handlePage}
+          >
+            Показать еще
+          </Button>,
+        ]}
+      >
+        <SimpleGrid columns={5} spacing={3}>
+          {listPhotos.map((el) => (
+            <DynamicPhotoItem key={el.id} {...el} />
+          ))}
+        </SimpleGrid>
+      </Modal>
+    </>
   );
 };

@@ -19,6 +19,12 @@ export const authApi = createApi({
         url: `/auth/login`,
       }),
     }),
+    logout: builder.query<unknown, unknown>({
+      query: () => ({
+        method: 'POST',
+        url: `/auth/logout`,
+      }),
+    }),
     validateEmail: builder.query<TAuthValidateEmailRequest, TAuthValidateEmailResponse>({
       query: (data) => ({
         data,
