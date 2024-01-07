@@ -20,7 +20,6 @@ export const serverRequest =
     return api({
       ...args,
       headers: {
-        Authorization: `Bearer ${cookies().get('token')?.value}`,
         'Content-Type': 'application/json',
         cookie: getCookies(),
       },

@@ -3,6 +3,17 @@ export const styles = {
     '*': {
       color: '#fafafa',
     },
+    '::-webkit-scrollbar': {
+      width: '12px',
+    },
+    '::-webkit-scrollbar-thumb': {
+      backgroundColor: '#1C2D50',
+      border: '3px solid #1C2D50',
+      borderRadius: '20px',
+    },
+    '::-webkit-scrollbar-track': {
+      background: 'transparent',
+    },
     body: {
       bgColor: '#0B1529',
     },

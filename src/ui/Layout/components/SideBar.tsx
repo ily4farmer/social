@@ -37,6 +37,9 @@ export const Sidebar = () => {
             <Link href="/friends" textDecor="underline">
               Друзья
             </Link>
+            <Link href="users/1/chat" textDecor="underline">
+              Чаты
+            </Link>
           </DrawerBody>
 
           <DrawerFooter>

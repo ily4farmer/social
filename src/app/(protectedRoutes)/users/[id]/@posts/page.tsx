@@ -1,5 +1,4 @@
 import Loading from 'app/(protectedRoutes)/loading';
-import { cookies } from 'next/headers';
 import { Suspense } from 'react';
 
 import { Posts } from '~features/user';
@@ -14,11 +13,7 @@ const getPosts = async (id: string) => {
         size: 15,
         userId: Number(id),
       }),
-      credentials: 'same-origin',
-      headers: {
-        Authorization: `Bearer ${cookies().get('token')?.value}`,
-        'Content-Type': 'application/json',
-      },
+      credentials: 'include',
       method: 'POST',
       mode: 'cors',
       next: { tags: ['todo-items'] },

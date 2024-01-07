@@ -45,11 +45,11 @@ export const AddPost = () => {
   };
 
   return (
-    <Box as="form" w="100%" onSubmit={handleSubmit(onSubmit)}>
+    <Box as="form" w="100%" onSubmit={handleSubmit(onSubmit)} pb={5}>
       <Controller
         name="title"
         control={control}
-        render={({ field }) => (
+        render={({ field: { ref, ...field } }) => (
           <FormInput
             {...field}
             control={{ isInvalid: Boolean(errors.title) }}
@@ -71,7 +71,7 @@ export const AddPost = () => {
       <Controller
         name="text"
         control={control}
-        render={({ field }) => (
+        render={({ field: { ref, ...field } }) => (
           <FormInput
             {...field}
             control={{ isInvalid: Boolean(errors.text) }}
@@ -81,7 +81,7 @@ export const AddPost = () => {
               onChange: field.onChange,
               onFocus: () => clearErrors('text'),
               placeholder: 'Текст поста',
-              resize: 'horizontal',
+              resize: 'vertical',
               type: 'textaria',
               value: field.value,
             }}
