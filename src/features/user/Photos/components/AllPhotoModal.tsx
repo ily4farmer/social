@@ -29,8 +29,8 @@ export const AllPhotoModal = ({
   const [page, setPage] = useState<number>(2);
 
   const { data, isFetching } = photoApi.useGetAllPhotosByUserQuery({
-    page,
-    size: 5,
+    page: 2,
+    size: 15,
     userId: Number(param.id),
   });
 
@@ -79,8 +79,8 @@ export const AllPhotoModal = ({
         ]}
       >
         <SimpleGrid columns={5} spacing={3}>
-          {listPhotos.map((el) => (
-            <DynamicPhotoItem key={el.id} {...el} />
+          {listPhotos.map((el, index) => (
+            <DynamicPhotoItem key={index} {...el} />
           ))}
         </SimpleGrid>
       </Modal>

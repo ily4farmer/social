@@ -1,22 +1,39 @@
 'use client';
 
-import { Link } from '@chakra-ui/next-js';
-import { Flex, Image } from '@chakra-ui/react';
-import { useParams } from 'next/navigation';
+import { Button, Flex, Image, useDisclosure } from '@chakra-ui/react';
+
+import { Modal } from '~ui';
 
 type PhotoItemProps = {
-  id: number;
   image: string;
 };
 
-export const PhotoItem = ({ id, image }: PhotoItemProps) => {
-  const param = useParams();
+export const PhotoItem = ({ image }: PhotoItemProps) => {
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
-    <Link href={`/users/${param.id}/photo/${id}`}>
-      <Flex flexDirection="column" alignItems="flex-start" cursor="pointer">
+    <>
+      <Flex flexDirection="column" alignItems="flex-start" cursor="pointer" onClick={onOpen}>
         <Image h={180} src={image} alt="image" borderRadius="8px" />
       </Flex>
-    </Link>
+
+      <Modal
+        textTitle="Фото"
+        isOpen={isOpen}
+        onClose={onClose}
+        modalContent={{
+          w: '360px',
+        }}
+        footer={[
+          <Button colorScheme="blue" mr={3} onClick={onClose}>
+            Close
+          </Button>,
+        ]}
+      >
+        <Flex w="100%" h="100%" justifyContent="center" alignItems="center">
+          <Image h={180} src={image} alt="image" borderRadius="8px" crossOrigin="use-credentials" />
+        </Flex>
+      </Modal>
+    </>
   );
 };

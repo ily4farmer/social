@@ -1,6 +1,6 @@
 'use client';
 
-import { Avatar, Button, Flex, Text, useBoolean, useDisclosure, Wrap } from '@chakra-ui/react';
+import { Button, Flex, Image, Text, useBoolean, useDisclosure, Wrap } from '@chakra-ui/react';
 import { useParams } from 'next/navigation';
 
 import { TUserModel } from '~models';
@@ -27,8 +27,9 @@ export const UserAvatar = ({ avatar }: { avatar: TUserModel['avatar'] }) => {
         onMouseEnter={setFlag.on}
         onMouseLeave={setFlag.off}
       >
-        <Avatar
+        <Image
           position="absolute"
+          objectFit="cover"
           top={0}
           left={0}
           w="100%"

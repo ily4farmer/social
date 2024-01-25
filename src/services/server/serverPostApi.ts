@@ -4,8 +4,8 @@ import { serverRequest } from './serverRequest';
 
 export const serverPostApi = {
   getAllPostByUser: serverRequest<TGetAllPostByUserRequest, TGetAllPostByUserResponse>((data) => ({
-    data,
+    body: data,
     method: 'POST',
-    url: `/post/get-all`,
+    urlPath: `/post/get-all`,
   })),
 };

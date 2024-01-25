@@ -6,12 +6,12 @@ export const serverUsersApi = {
   checkUser: serverRequest<
     { message: string },
     {
-      id: number;
+      id: string;
     }
-  >((data) => ({
-    data,
+  >((body) => ({
+    body,
     method: 'POST',
-    url: `/user/check-user`,
+    urlPath: `/user/check-user`,
   })),
   getMe: serverRequest<
     {
@@ -24,12 +24,12 @@ export const serverUsersApi = {
     unknown
   >(() => ({
     method: 'GET',
-    url: `/user/me`,
+    urlPath: `/user/me`,
   })),
-  getUser: serverRequest<TUserModel, { id: number }>((data) => ({
-    data,
+  getUser: serverRequest<TUserModel, { id: number }>((body) => ({
+    body,
     method: 'POST',
-    url: `/user/get-user`,
+    urlPath: `/user/get-user`,
   })),
   getUserAvatar: serverRequest<
     {
@@ -37,9 +37,9 @@ export const serverUsersApi = {
       image: string;
     },
     { id: number }
-  >((data) => ({
-    data,
+  >((body) => ({
+    body,
     method: 'POST',
-    url: `/user/get-avatar`,
+    urlPath: `/user/get-avatar`,
   })),
 };

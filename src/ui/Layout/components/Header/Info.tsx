@@ -8,11 +8,11 @@ import { serverUsersApi } from '~services/server';
 import { HeaderMenu } from './HeaderMenu';
 
 export const Info = async () => {
-  const { data } = await serverUsersApi.getMe({});
+  const res = await serverUsersApi.getMe({});
 
   return (
     <Suspense key="headerMenu" fallback={<Loading />}>
-      <HeaderMenu {...data} />
+      <HeaderMenu {...res} />
     </Suspense>
   );
 };

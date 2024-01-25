@@ -1,6 +1,6 @@
 'use server';
 
-import { Avatar, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
+import { Flex, Image, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
 import { Logout } from './Logout';
@@ -17,7 +17,15 @@ export const HeaderMenu = ({ avatar, email, firstName, id, lastName }: HeaderMen
   <Menu isLazy>
     <MenuButton>
       <Flex>
-        <Avatar name={firstName} src={avatar} mr={4} />
+        <Image
+          objectFit="cover"
+          w={50}
+          h={50}
+          borderRadius="50%"
+          src={avatar}
+          alt="avatar"
+          mr={4}
+        />
         <Flex flexDirection="column">
           <Text textAlign="left">{email}</Text>
           <Text pt={1} textAlign="left">

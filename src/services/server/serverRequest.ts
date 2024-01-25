@@ -1,7 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { cookies } from 'next/headers';
-
-import { api } from '../axiosConfig';
 
 const getCookies = () => {
   const nextCookies = cookies();
@@ -12,16 +9,40 @@ const getCookies = () => {
   );
 };
 
-type TRequestFunction<T> = (params: T) => AxiosRequestConfig;
+type TReqConfig<T> = (params: T) => { body?: T; urlPath: string } & Omit<RequestInit, 'body'>;
 export const serverRequest =
-  <T, D>(requestFunction: TRequestFunction<D>) =>
-  (params: D) => {
-    const args = requestFunction(params);
-    return api({
+  <T, D>(requestFunction: TReqConfig<D>) =>
+  async (params: D) => {
+    const { body, urlPath, ...args } = requestFunction(params);
+
+    const res = await fetch(`http://localhost:5700/api${urlPath}`, {
       ...args,
+      body: JSON.stringify(body),
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
         cookie: getCookies(),
       },
-    }).then((res) => res as AxiosResponse<T>);
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw data;
+    }
+
+    return data as T;
   };
+
+export const serverApi = {
+  checkUser: serverRequest<
+    { message: string },
+    {
+      id: string;
+    }
+  >((data) => ({
+    body: data,
+    method: 'POST',
+    urlPath: `/user/check-user`,
+  })),
+};

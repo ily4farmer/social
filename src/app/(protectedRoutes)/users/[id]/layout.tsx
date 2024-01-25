@@ -1,22 +1,21 @@
 import { Container, Flex } from '@chakra-ui/react';
-import { AxiosError, HttpStatusCode } from 'axios';
+import { HttpStatusCode } from 'axios';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 
 import { serverUsersApi } from '~services/server';
-import { ApiError } from '~types';
+import { TServerApiError } from '~types';
 
-const checkUser = async (id: number) => {
+const checkUser = async (id: string) => {
   try {
-    const { data } = await serverUsersApi.checkUser({ id });
-    return data;
+    await serverUsersApi.checkUser({ id });
   } catch (error) {
-    const axiosError = error as AxiosError<ApiError>;
-    if (axiosError.response?.status === HttpStatusCode.NotFound) {
+    const serverError = error as TServerApiError;
+    if (serverError.statusCode === HttpStatusCode.NotFound) {
       return notFound();
     }
 
-    throw axiosError;
+    return serverError;
   }
 };
 
@@ -36,7 +35,7 @@ export default async function userRoot({
   posts: ReactNode;
   userInfo: ReactNode;
 }) {
-  await checkUser(Number(params.id));
+  await checkUser(params.id);
 
   return (
     <Container>

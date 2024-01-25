@@ -5,13 +5,13 @@ import { serverRequest } from './serverRequest';
 export const serverPhotoApi = {
   getAllPhotosByUser: serverRequest<TGetAllPhotosByUserRequest, TGetAllPhotosByUserResponse>(
     (data) => ({
-      data,
+      body: data,
       method: 'POST',
-      url: `/photos/get-photos`,
+      urlPath: `/photos/get-photos`,
     }),
   ),
   getPhoto: serverRequest<{ id: number; image: string }, { id: number }>(({ id }) => ({
     method: 'GET',
-    url: `photos/find-one/${id}`,
+    urlPath: `photos/find-one/${id}`,
   })),
 };

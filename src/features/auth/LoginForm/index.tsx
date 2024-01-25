@@ -32,6 +32,15 @@ export const LoginForm = () => {
       }, 10000);
 
       methods.reset();
+
+      toast({
+        description: 'Ожидайте перехода на свою страницу',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+        status: 'success',
+        title: 'Успешный запрос',
+      });
     } catch (error) {
       const err = error as ApiError;
 

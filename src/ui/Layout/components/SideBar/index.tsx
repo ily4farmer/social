@@ -1,12 +1,10 @@
 'use client';
 
 import { HamburgerIcon } from '@chakra-ui/icons';
-import { Link } from '@chakra-ui/next-js';
 import {
   Button,
   Container,
   Drawer,
-  DrawerBody,
   DrawerCloseButton,
   DrawerContent,
   DrawerFooter,
@@ -15,6 +13,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
+
+import { Body } from './Body';
 
 export const Sidebar = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -29,18 +29,7 @@ export const Sidebar = () => {
           <DrawerCloseButton />
           <DrawerHeader color="#fafafa">Меню</DrawerHeader>
 
-          <DrawerBody display="flex" flexDirection="column">
-            <Link href="/friends" textDecor="underline">
-              Мой профиль
-            </Link>
-
-            <Link href="/friends" textDecor="underline">
-              Друзья
-            </Link>
-            <Link href="users/1/chat" textDecor="underline">
-              Чаты
-            </Link>
-          </DrawerBody>
+          <Body />
 
           <DrawerFooter>
             <Button variant="secondary" mr={3} onClick={onClose}>

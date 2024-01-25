@@ -1,6 +1,5 @@
 import Loading from 'app/(protectedRoutes)/loading';
-import { AxiosError, HttpStatusCode } from 'axios';
-import { notFound } from 'next/navigation';
+import { AxiosError } from 'axios';
 import { Suspense } from 'react';
 
 import { UserInfo } from '~features/user';
@@ -9,14 +8,10 @@ import { ApiError } from '~types';
 
 const getData = async (id: number) => {
   try {
-    const { data } = await serverUsersApi.getUser({ id });
-    return data;
+    const res = await serverUsersApi.getUser({ id });
+    return res;
   } catch (error) {
     const axiosError = error as AxiosError<ApiError>;
-    // ToDo: Проверять централизованно в middleware для любой страницы
-    if (axiosError.response?.status === HttpStatusCode.Forbidden) {
-      return notFound();
-    }
 
     throw axiosError;
   }

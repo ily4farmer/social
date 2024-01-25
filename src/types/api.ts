@@ -7,6 +7,12 @@ export type ApiError = {
   success: boolean;
 };
 
+export type TServerApiError = {
+  error?: string;
+  message?: unknown;
+  statusCode?: number;
+};
+
 export type BaseQueryError = {
   message: string;
   status?: number;

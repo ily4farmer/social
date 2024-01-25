@@ -1,4 +1,4 @@
-'use client';
+'use server';
 
 import { SimpleGrid } from '@chakra-ui/react';
 
@@ -9,12 +9,9 @@ import { PhotoItem } from './PhotoItem';
 
 export const PhotoList = ({ data }: { data: TGetAllPhotosByUserRequest['data'] }) => (
   <SimpleGrid columns={5} spacing={3}>
-    {data.map((el, index) =>
-      index !== 4 ? (
-        <PhotoItem key={el.id} {...el} />
-      ) : (
-        <AllPhotoModal key={index} defaultPhotos={data} />
-      ),
-    )}
+    {data.slice(0, 4).map((el) => (
+      <PhotoItem key={el.id} image={el.image} />
+    ))}
+    <AllPhotoModal defaultPhotos={data} />
   </SimpleGrid>
 );
