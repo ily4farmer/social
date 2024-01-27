@@ -1,4 +1,3 @@
-import { Container, Flex } from '@chakra-ui/react';
 import { HttpStatusCode } from 'axios';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
@@ -10,6 +9,8 @@ const checkUser = async (id: string) => {
   try {
     await serverUsersApi.checkUser({ id });
   } catch (error) {
+    console.log(error);
+
     const serverError = error as TServerApiError;
     if (serverError.statusCode === HttpStatusCode.NotFound) {
       return notFound();
@@ -20,34 +21,20 @@ const checkUser = async (id: string) => {
 };
 
 export default async function userRoot({
-  avatar,
+  children,
   modal,
   params,
-  photos,
-  posts,
-  userInfo,
 }: {
-  avatar: ReactNode;
   children: ReactNode;
   modal: ReactNode;
   params: { id: string };
-  photos: ReactNode;
-  posts: ReactNode;
-  userInfo: ReactNode;
 }) {
   await checkUser(params.id);
 
   return (
-    <Container>
-      <Flex>
-        {avatar}
-        <Flex flexDirection="column" w="100%">
-          {userInfo}
-          {photos}
-          {posts}
-          {modal}
-        </Flex>
-      </Flex>
-    </Container>
+    <>
+      {children}
+      {modal}
+    </>
   );
 }

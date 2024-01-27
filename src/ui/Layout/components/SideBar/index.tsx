@@ -1,43 +1,17 @@
-'use client';
+'use server';
 
-import { HamburgerIcon } from '@chakra-ui/icons';
-import {
-  Button,
-  Container,
-  Drawer,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  useDisclosure,
-} from '@chakra-ui/react';
-import { useRef } from 'react';
+import Loading from 'app/(protectedRoutes)/loading';
+import { Suspense } from 'react';
 
-import { Body } from './Body';
+import { serverUsersApi } from '~services/server';
 
-export const Sidebar = () => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-  const btnRef = useRef(null);
+import { Aside } from './Aside';
 
+export const Sidebar = async () => {
+  const { id } = await serverUsersApi.getMe({});
   return (
-    <Container pt="10px">
-      <HamburgerIcon ref={btnRef} onClick={onOpen} cursor="pointer" w={10} h={10} />
-      <Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={btnRef}>
-        <DrawerOverlay />
-        <DrawerContent bgColor="#111F39">
-          <DrawerCloseButton />
-          <DrawerHeader color="#fafafa">Меню</DrawerHeader>
-
-          <Body />
-
-          <DrawerFooter>
-            <Button variant="secondary" mr={3} onClick={onClose}>
-              Закрыть
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </Container>
+    <Suspense key="asideMenu" fallback={<Loading />}>
+      <Aside id={id} />
+    </Suspense>
   );
 };

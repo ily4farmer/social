@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import { TUserModel } from '~models';
 import { DropZone, Modal } from '~ui';
 
-export const UserAvatar = ({ avatar }: { avatar: TUserModel['avatar'] }) => {
+export const Content = ({ avatar }: { avatar: TUserModel['avatar'] }) => {
   const param = useParams();
 
   const { isOpen, onClose, onOpen } = useDisclosure();

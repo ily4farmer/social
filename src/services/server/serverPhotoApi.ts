@@ -12,6 +12,6 @@ export const serverPhotoApi = {
   ),
   getPhoto: serverRequest<{ id: number; image: string }, { id: number }>(({ id }) => ({
     method: 'GET',
-    urlPath: `photos/find-one/${id}`,
+    urlPath: `/photos/find-one/${id}`,
   })),
 };
